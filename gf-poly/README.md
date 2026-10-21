@@ -79,5 +79,4 @@ cargo clippy -p gf-poly --all-targets -- -D warnings
 RUSTDOCFLAGS="-D warnings" cargo doc -p gf-poly --no-deps
 ```
 
-CI также проверяет библиотеки workspace и тесты `gf-poly`/`gf-linalg` на Rust 1.81.
 Лицензия: MIT OR Apache-2.0.
