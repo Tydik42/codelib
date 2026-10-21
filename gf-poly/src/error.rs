@@ -1,10 +1,19 @@
-//! Ошибки создания и чтения многочленов.
+//! Ошибки операций над многочленами и ввода/вывода.
 
 use core::fmt;
 
-/// Ошибка создания или текстового ввода многочлена.
+/// Ошибка операции над многочленом или ввода/вывода.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum PolynomialError {
+    /// Число коэффициентов результата не представимо типом `usize`.
+    SizeOverflow,
+    /// Делитель является нулевым многочленом.
+    DivisionByZero,
+    /// Запрошенная операция пока не реализована.
+    NotImplemented {
+        /// Название операции.
+        operation: &'static str,
+    },
     /// Массив коэффициентов превышает допустимый объём памяти.
     CoefficientLimitExceeded {
         /// Число переданных коэффициентов, включая хвостовые нули.
@@ -48,6 +57,11 @@ pub enum PolynomialError {
 impl fmt::Display for PolynomialError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
+            Self::SizeOverflow => write!(f, "переполнение числа коэффициентов результата"),
+            Self::DivisionByZero => write!(f, "деление на нулевой многочлен"),
+            Self::NotImplemented { operation } => {
+                write!(f, "операция пока не реализована: {operation}")
+            }
             Self::CoefficientLimitExceeded {
                 coefficients,
                 max_coefficients,

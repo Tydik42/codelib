@@ -112,9 +112,16 @@ impl<F: FieldElement> Polynomial<F> {
         self.degree().is_none()
     }
 
-    fn significant_coefficients(&self) -> &[F] {
+    pub(crate) fn significant_coefficients(&self) -> &[F] {
         self.degree()
             .map_or(&[], |degree| &self.coefficients[..=degree])
+    }
+
+    pub(crate) fn from_computed(mut coefficients: Vec<F>) -> Result<Self, PolynomialError> {
+        while coefficients.last().is_some_and(|value| value.is_zero()) {
+            coefficients.pop();
+        }
+        Self::try_new(coefficients)
     }
 }
 

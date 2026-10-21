@@ -2,11 +2,13 @@
 #![warn(missing_docs)]
 #![doc = include_str!("../README.md")]
 
+mod arithmetic;
 mod error;
 mod field;
 mod field_text;
 mod message;
 mod polynomial;
+mod stubs;
 mod text;
 
 pub use error::PolynomialError;
